@@ -1,11 +1,19 @@
 import React from 'react';
-import './App.css';
+import styles from 'styles/App.module.css';
+import { SearchBox } from './components/SearchBox';
+import { Sidebar } from './components/Sidebar';
+import { Workspace } from './components/Workspace';
+import { ProvideApp } from './hooks/useProvide';
 
 function App() {
   return (
-    <div className='App'>
-      axaxa
-    </div>
+    <ProvideApp>
+      <SearchBox />
+      <div className={styles.mainBlock}>
+        <Sidebar />
+        <Workspace />
+      </div>
+    </ProvideApp>
   );
 }
 

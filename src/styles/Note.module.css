@@ -1,0 +1,24 @@
+.noteContainer {
+    width: 100%;
+    padding: 10px 15px;
+    border: none;
+    border-bottom: 1px solid gray;
+    cursor: pointer;
+    background: none;
+}
+
+.noteContainer:hover {
+background: #c4b9b9;
+}
+
+.previewBlock {
+    display: flex;
+    justify-content: space-between;
+}
+
+.previewDescription {
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+}

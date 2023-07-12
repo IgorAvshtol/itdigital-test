@@ -1,0 +1,21 @@
+.searchBoxBlock {
+    padding: 15px 10px;
+    border: 1px solid red;
+    display: flex;
+    justify-content: space-between;
+    background: gray;
+}
+
+.buttonsBlock {
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.inputBlock {
+    width: 200px;
+    padding: 0 10px;
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+}

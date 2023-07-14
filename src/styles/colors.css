@@ -1,0 +1,9 @@
+:root {
+    --primary-white-color: #fff;
+    --primary-gray-color: #5E6E7D;
+    --drawer-color: rgba(3, 2, 41, 0.3);
+    --background-hover-color: #c4b9b9;
+    --background-active-color: #eccdcd;
+    --border-color: gray;
+    --modaltitle-color: #5E6E7D;
+}

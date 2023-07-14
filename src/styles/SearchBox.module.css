@@ -1,9 +1,10 @@
+@import "colors.css";
+
 .searchBoxBlock {
     padding: 15px 10px;
-    border: 1px solid red;
     display: flex;
     justify-content: space-between;
-    background: gray;
+    background: var(--primary-gray-color);
 }
 
 .buttonsBlock {
@@ -18,4 +19,14 @@
     border: none;
     border-radius: 5px;
     box-sizing: border-box;
+}
+
+@media screen and (max-width: 450px) {
+    .inputBlock {
+        width: 170px;
+    }
+
+    .buttonsBlock {
+        width: 180px;
+    }
 }

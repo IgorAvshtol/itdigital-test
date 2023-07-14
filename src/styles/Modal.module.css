@@ -1,0 +1,37 @@
+@import "colors.css";
+
+.drawer {
+    position: absolute;
+    width: 100%;
+    min-height: 100vh;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    background: var(--drawer-color);
+}
+
+.mainBlock {
+    margin-top: 180px;
+    height: max-content;
+    width: 632px;
+    padding: 20px;
+    border-radius: 20px;
+    background: var(--primary-white-color);
+}
+
+.headerBlock {
+    display: flex;
+    justify-content: center;
+}
+
+.title {
+    color: var(--modaltitle-color);
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.buttonsBlock {
+    display: flex;
+    justify-content: space-around;
+}

@@ -1,14 +1,25 @@
+@import "colors.css";
+
 .noteContainer {
     width: 100%;
     padding: 10px 15px;
     border: none;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid var(--border-color);
     cursor: pointer;
     background: none;
 }
 
 .noteContainer:hover {
-background: #c4b9b9;
+    background: var(--background-hover-color);
+}
+
+.activeNote {
+    width: 100%;
+    padding: 10px 15px;
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    background: var(--background-active-color);
 }
 
 .previewBlock {
@@ -17,8 +28,29 @@ background: #c4b9b9;
 }
 
 .previewDescription {
-    width: 250px;
+    width: 90%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis
+}
+
+@media screen and (max-width: 1130px) {
+    .previewBlock {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media screen and (max-width: 1130px) {
+    .previewDescription {
+        font-size: 14px;
+        width: 95%;
+    }
+}
+
+@media screen and (max-width: 1130px) {
+    .previewBlock {
+        font-size: 12px;
+    }
 }

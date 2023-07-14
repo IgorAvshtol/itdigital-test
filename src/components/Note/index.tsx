@@ -9,14 +9,15 @@ interface NoteProps {
 }
 
 export function Note({ text, createdAt, id }: NoteProps) {
-  const { showNote } = useAppContext();
+  const { showNote, currentNote, showEditModeForCurrentNote } = useAppContext();
 
   const onNoteClickHandler = () => {
     showNote(id);
+    showEditModeForCurrentNote(false);
   };
 
   return (
-    <button className={styles.noteContainer} onClick={onNoteClickHandler}>
+    <button className={currentNote?.id === id ? styles.activeNote : styles.noteContainer} onClick={onNoteClickHandler}>
       <div className={styles.previewBlock}>
         <p>{dateParser(createdAt)}</p>
         <p className={styles.previewDescription}>{text}</p>

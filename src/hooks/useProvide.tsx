@@ -17,8 +17,15 @@ export interface AppData {
   currentNote: Note | null;
   getAllNotes: () => void;
   showNote: (id: string) => void;
+  createNote: (text: string) => void;
+  showEditModeForCurrentNote: (value: boolean) => void;
+  editNote: (newText: string, noteId: string) => void;
+  showModal: boolean;
+  showDeleteModal: (value: boolean) => void;
+  deleteCurrentNote: () => void;
+  editMode: boolean;
   loading: boolean;
-  error: boolean;
+  error: string;
 }
 
 export const ProvideContext = createContext<AppData | undefined>(undefined);
@@ -44,8 +51,10 @@ export const useAppContext = () => {
 export const useProvide = () => {
   const [notes, setNotes] = useState<Note[]>([]);
   const [currentNote, setCurrentNote] = useState<Note | null>(null);
-  const [error, setError] = useState<boolean>(false);
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const getAllNotes = async () => {
     setLoading(true);
@@ -55,8 +64,25 @@ export const useProvide = () => {
       setNotes(response.data.records);
       setLoading(false);
     } catch (err) {
-      setError(true);
+      setError('Something went wrong');
       setLoading(false);
+    }
+  };
+
+  const createNote = async (text: string) => {
+    try {
+      // eslint-disable-next-line max-len
+      const response = await instance.post(`/${process.env.REACT_APP_API_ID}/dtypes.json`, {
+        rest_api_key: process.env.REACT_APP_API_KEY,
+        values: {
+          entity_id: process.env.REACT_APP_ENTITY_ID,
+          [`${process.env.REACT_APP_RECORDS_ID}`]: text,
+        },
+      });
+      setNotes((prevState) => [...prevState, response.data.record]);
+      setError('');
+    } catch (err) {
+      setError('Something went wrong');
     }
   };
 
@@ -65,7 +91,66 @@ export const useProvide = () => {
     setCurrentNote(note[0]);
   };
 
+  const showEditModeForCurrentNote = (value: boolean) => {
+    setEditMode(value);
+  };
+
+  const editNote = async (newText: string, noteId: string) => {
+    try {
+      // eslint-disable-next-line max-len
+      const response = await instance.put(`/${process.env.REACT_APP_API_ID}/dtypes/${noteId}.json`, {
+        rest_api_key: process.env.REACT_APP_API_KEY,
+        values: {
+          entity_id: process.env.REACT_APP_ENTITY_ID,
+          [`${process.env.REACT_APP_RECORDS_ID}`]: newText,
+        },
+      });
+      const editableNote = notes.find((note) => note.id === noteId);
+      if (editableNote) {
+        const newValues = response.data.record.values;
+        setNotes((prevState) => prevState.map((note) => {
+          if (note.id === noteId) {
+            return { ...note, values: newValues };
+          }
+          return note;
+        }));
+        setError('');
+      }
+    } catch (err) {
+      setError('Something went wrong');
+    }
+  };
+
+  const showDeleteModal = (value: boolean) => {
+    setShowModal(value);
+  };
+
+  const deleteCurrentNote = async () => {
+    try {
+      const id = currentNote?.id;
+      // eslint-disable-next-line max-len
+      await instance.delete(`/${process.env.REACT_APP_API_ID}/dtypes/${id}.json?rest_api_key=${process.env.REACT_APP_API_KEY}`);
+      setNotes((prevState) => [...prevState.filter((note) => note.id !== id)]);
+      setShowModal(false);
+    } catch (err) {
+      setError('Something went wrong');
+    }
+  };
+
   return {
-    error, loading, setError, getAllNotes, notes, currentNote, showNote,
+    error,
+    loading,
+    setError,
+    getAllNotes,
+    notes,
+    currentNote,
+    showNote,
+    createNote,
+    editMode,
+    showEditModeForCurrentNote,
+    editNote,
+    showModal,
+    showDeleteModal,
+    deleteCurrentNote,
   };
 };
